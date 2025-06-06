@@ -1,6 +1,7 @@
 import sqlite3
 import logging
 import os
+from datetime import datetime
 
 # Configure logging
 logging.basicConfig(
@@ -14,14 +15,15 @@ class Database:
         os.makedirs('database', exist_ok=True)
         self.db_path = db_path
         self.conn = None
+        self.cursor = None
 
     def initialize_db(self):
         try:
             self.conn = sqlite3.connect(self.db_path)
-            cursor = self.conn.cursor()
+            self.cursor = self.conn.cursor()
             
             # Create tables
-            cursor.execute('''
+            self.cursor.execute('''
                 CREATE TABLE IF NOT EXISTS transaction_types (
                     id INTEGER PRIMARY KEY,
                     name TEXT NOT NULL,
@@ -29,7 +31,7 @@ class Database:
                 )
             ''')
             
-            cursor.execute('''
+            self.cursor.execute('''
                 CREATE TABLE IF NOT EXISTS transactions (
                     id INTEGER PRIMARY KEY,
                     transaction_id TEXT UNIQUE NOT NULL,
@@ -56,7 +58,7 @@ class Database:
                 ('bundle_purchase', 'Internet and voice bundle purchases')
             ]
             
-            cursor.executemany('''
+            self.cursor.executemany('''
                 INSERT OR IGNORE INTO transaction_types (name, description)
                 VALUES (?, ?)
             ''', transaction_types)
@@ -70,8 +72,7 @@ class Database:
 
     def insert_transaction(self, transaction: dict):
         try:
-            cursor = self.conn.cursor()
-            cursor.execute('''
+            self.cursor.execute('''
                 INSERT OR IGNORE INTO transactions (
                     transaction_id, type, amount, transaction_date, counterparty, raw_message
                 ) VALUES (?, ?, ?, ?, ?, ?)
@@ -85,44 +86,43 @@ class Database:
             ))
             self.conn.commit()
             logger.debug(f"Inserted transaction: {transaction['transaction_id']}")
+            return True
         except sqlite3.Error as e:
             logger.error(f"Insert transaction error: {e}")
+            return False
 
     def get_transactions(self, limit=100, offset=0):
         try:
-            cursor = self.conn.cursor()
-            cursor.execute('''
+            self.cursor.execute('''
                 SELECT * FROM transactions 
                 ORDER BY transaction_date DESC
                 LIMIT ? OFFSET ?
             ''', (limit, offset))
-            return cursor.fetchall()
+            return self.cursor.fetchall()
         except sqlite3.Error as e:
             logger.error(f"Get transactions error: {e}")
             return []
 
     def get_summary_stats(self):
         try:
-            cursor = self.conn.cursor()
-            
             # Total transactions
-            cursor.execute('SELECT COUNT(*) FROM transactions')
-            total_transactions = cursor.fetchone()[0] or 0
+            self.cursor.execute('SELECT COUNT(*) FROM transactions')
+            total_transactions = self.cursor.fetchone()[0] or 0
             
             # Total volume
-            cursor.execute('SELECT SUM(amount) FROM transactions')
-            total_volume = cursor.fetchone()[0] or 0
+            self.cursor.execute('SELECT SUM(amount) FROM transactions')
+            total_volume = self.cursor.fetchone()[0] or 0
             
             # Successful transactions (assuming all are successful for this example)
             successful = total_transactions
             
             # Transactions by type
-            cursor.execute('''
+            self.cursor.execute('''
                 SELECT type, COUNT(*), SUM(amount) 
                 FROM transactions 
                 GROUP BY type
             ''')
-            by_type = cursor.fetchall()
+            by_type = self.cursor.fetchall()
             
             return {
                 'total_transactions': total_transactions,
@@ -138,14 +138,13 @@ class Database:
     
     def get_volume_data(self):
         try:
-            cursor = self.conn.cursor()
-            cursor.execute('''
+            self.cursor.execute('''
                 SELECT DATE(transaction_date) as day, SUM(amount)
                 FROM transactions
                 GROUP BY day
                 ORDER BY day
             ''')
-            results = cursor.fetchall()
+            results = self.cursor.fetchall()
             
             labels = [row[0] for row in results]
             data = [row[1] for row in results]
@@ -160,13 +159,12 @@ class Database:
     
     def get_type_data(self):
         try:
-            cursor = self.conn.cursor()
-            cursor.execute('''
+            self.cursor.execute('''
                 SELECT type, COUNT(*), SUM(amount)
                 FROM transactions
                 GROUP BY type
             ''')
-            results = cursor.fetchall()
+            results = self.cursor.fetchall()
             
             labels = [row[0] for row in results]
             counts = [row[1] for row in results]
@@ -181,6 +179,23 @@ class Database:
             logger.error(f"Get type data error: {e}")
             return {'labels': [], 'counts': [], 'amounts': []}
     
+    def reset_database(self):
+        try:
+            self.cursor.execute('DROP TABLE IF EXISTS transactions')
+            self.cursor.execute('DROP TABLE IF EXISTS transaction_types')
+            self.conn.commit()
+            self.initialize_db()
+            logger.info("Database reset successfully")
+            return True
+        except sqlite3.Error as e:
+            logger.error(f"Database reset error: {e}")
+            return False
+    
     def close(self):
         if self.conn:
             self.conn.close()
+
+if __name__ == "__main__":
+    db = Database()
+    db.initialize_db()
+    print("Database initialized successfully")
