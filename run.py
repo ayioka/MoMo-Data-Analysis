@@ -1,38 +1,19 @@
 import os
 import subprocess
-from backend.app import app
+from pathlib import Path
 
 def initialize_project():
     # Create required directories
-    os.makedirs('data', exist_ok=True)
-    os.makedirs('database', exist_ok=True)
-    os.makedirs('frontend', exist_ok=True)
+    Path("data").mkdir(exist_ok=True)
+    Path("database").mkdir(exist_ok=True)
+    Path("frontend").mkdir(exist_ok=True)
     
     print("Project directories created")
     
-    # Install Python dependencies
-    print("Installing Python dependencies...")
-    subprocess.run(['pip', 'install', '-r', 'backend/requirements.txt'], check=True)
-    
-    print("\nSetup completed successfully!")
-    print("You can now run the application with: python run.py --run")
-
-if __name__ == '__main__':
-    import argparse
-    
-    parser = argparse.ArgumentParser(description='MTN MoMo Analytics Dashboard')
-    parser.add_argument('--setup', action='store_true', help='Initialize project setup')
-    parser.add_argument('--run', action='store_true', help='Run the application')
-    
-    args = parser.parse_args()
-    
-    if args.setup:
-        initialize_project()
-    elif args.run:
-        # Create sample XML file if it doesn't exist
-        if not os.path.exists('data/sms_v2.xml'):
-            with open('data/sms_v2.xml', 'w') as f:
-                f.write('''<?xml version="1.0" encoding="UTF-8"?>
+    # Create sample XML file if it doesn't exist
+    if not Path("data/sms_v2.xml").exists():
+        with open("data/sms_v2.xml", "w") as f:
+            f.write('''<?xml version="1.0" encoding="UTF-8"?>
 <sms_data>
     <sms>
         <body>You have received 5000 RWF from John Doe. Transaction ID: 123456. Date: 2024-01-01 10:00:00.</body>
@@ -50,6 +31,29 @@ if __name__ == '__main__':
         <body>Yello! You have purchased an internet bundle of 1GB for 2000 RWF valid for 30 days.</body>
     </sms>
 </sms_data>''')
+        print("Sample XML file created at data/sms_v2.xml")
+    
+    print("\nSetup completed successfully!")
+
+if __name__ == '__main__':
+    import argparse
+    
+    parser = argparse.ArgumentParser(description='MTN MoMo Analytics Dashboard')
+    parser.add_argument('--setup', action='store_true', help='Initialize project setup')
+    parser.add_argument('--run', action='store_true', help='Run the application')
+    
+    args = parser.parse_args()
+    
+    if args.setup:
+        initialize_project()
+    elif args.run:
+        # Import app here after dependencies are installed
+        from backend.app import app
+        
+        # Ensure database is initialized
+        from backend.database import Database
+        db = Database()
+        db.initialize_db()
         
         # Start the application
         app.run(debug=True, port=5000)
