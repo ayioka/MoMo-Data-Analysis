@@ -1,0 +1,94 @@
+{
+    "transaction_types": {
+        "incoming_money": {
+            "name": "Incoming Money",
+            "patterns": [
+                "received (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+) from",
+                "credited with (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+) from",
+                "You have received (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+) from"
+            ],
+            "counterparty_pattern": "from ([A-Za-z\\s]+)\\."
+        },
+        "payment_code_holder": {
+            "name": "Payment to Code Holder",
+            "patterns": [
+                "payment of (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+) to",
+                "paid (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+) to",
+                "sent (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+) to"
+            ],
+            "counterparty_pattern": "to ([A-Za-z\\s]+)"
+        },
+        "transfer_mobile": {
+            "name": "Transfer to Mobile",
+            "patterns": [
+                "transfer of (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+) to mobile",
+                "sent (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+) to \\d+",
+                "Transferred (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+) to"
+            ],
+            "counterparty_pattern": "to (\\d+)"
+        },
+        "bank_deposit": {
+            "name": "Bank Deposit",
+            "patterns": [
+                "deposited (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+) to your bank",
+                "bank deposit of (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+)"
+            ]
+        },
+        "airtime_payment": {
+            "name": "Airtime Payment",
+            "patterns": [
+                "airtime (?:purchase|bill) of (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+)",
+                "airtime top-up of (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+)",
+                "purchased airtime worth (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+)"
+            ]
+        },
+        "cash_power": {
+            "name": "Cash Power",
+            "patterns": [
+                "cash power (?:purchase|bill) of (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+)",
+                "electricity payment of (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+)"
+            ]
+        },
+        "third_party": {
+            "name": "Third Party Transaction",
+            "patterns": [
+                "initiated by third party for (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+)",
+                "third party transaction of (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+)"
+            ]
+        },
+        "agent_withdrawal": {
+            "name": "Agent Withdrawal",
+            "patterns": [
+                "withdrawn (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+) via agent",
+                "cash out of (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+) at agent"
+            ],
+            "counterparty_pattern": "agent: ([A-Za-z\\s]+)"
+        },
+        "bank_transfer": {
+            "name": "Bank Transfer",
+            "patterns": [
+                "transferred (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+) to bank",
+                "bank transfer of (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+)"
+            ]
+        },
+        "bundle_purchase": {
+            "name": "Bundle Purchase",
+            "patterns": [
+                "(?:internet|voice) bundle (?:purchase|for) (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+)",
+                "purchased (?:data|voice) bundle worth (?:RWF )?(\\d{1,3}(?:,\\d{3})*(?:\\.\\d+)?|\\d+)"
+            ]
+        }
+    },
+    "metadata_patterns": {
+        "transaction_id": [
+            "(?:Transaction ID:|TxId:|Ref:)\\s*([A-Z0-9]+)"
+        ],
+        "date": [
+            "Date: (\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2})",
+            "Date: (\\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}:\\d{2})",
+            "on (\\d{4}-\\d{2}-\\d{2}) at (\\d{2}:\\d{2}:\\d{2})",
+            "on (\\d{2}/\\d{2}/\\d{4}) at (\\d{2}:\\d{2}:\\d{2})",
+            "(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2})"
+        ]
+    }
+}
