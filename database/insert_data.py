@@ -39,4 +39,3 @@ for entry in cleaned_data:
 
 conn.commit()
 conn.close()
-print("Data inserted successfully.")
