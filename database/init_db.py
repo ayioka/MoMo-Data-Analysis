@@ -1,6 +1,6 @@
 import sqlite3
 
-# Connect to SQLite (Create database if it doesn't exist)
+# Connect to SQLite (Create database)
 conn = sqlite3.connect("momo_data.db")
 cursor = conn.cursor()
 
