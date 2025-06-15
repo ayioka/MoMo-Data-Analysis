@@ -1,218 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTN MoMo Transaction Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoMo Dashboard</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2 sidebar">
-                <div class="sidebar-header">
-                    <h4><i class="bi bi-phone"></i> MoMo Dashboard</h4>
-                </div>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#" id="dashboard-link">
-                            <i class="bi bi-speedometer2"></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="transactions-link">
-                            <i class="bi bi-list-ul"></i> Transactions
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="analytics-link">
-                            <i class="bi bi-graph-up"></i> Analytics
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-10 main-content">
-                <div class="dashboard-view" id="dashboard-view">
-                    <h2 class="mb-4">Transaction Dashboard</h2>
-                    
-                    <div class="row mb-4">
-                        <div class="col-md-4">
-                            <div class="card stat-card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Total Transactions</h5>
-                                    <h2 class="card-value" id="total-transactions">0</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card stat-card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Total Amount</h5>
-                                    <h2 class="card-value" id="total-amount">0 RWF</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card stat-card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Unique Recipients</h5>
-                                    <h2 class="card-value" id="unique-recipients">0</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Transactions by Type</h5>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="typeChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Monthly Transaction Volume</h5>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="monthlyChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Recent Transactions</h5>
-                                </div>
-                                <div class="card-body">
-                                    <table class="table table-striped table-hover" id="recent-transactions">
-                                        <thead>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Type</th>
-                                                <th>Amount</th>
-                                                <th>Recipient</th>
-                                                <th>Balance</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="transactions-view d-none" id="transactions-view">
-                    <h2 class="mb-4">Transaction List</h2>
-                    
-                    <div class="row mb-4">
-                        <div class="col-md-3">
-                            <select class="form-select" id="type-filter">
-                                <option value="">All Types</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="date" class="form-control" id="date-from" placeholder="From">
-                        </div>
-                        <div class="col-md-3">
-                            <input type="date" class="form-control" id="date-to" placeholder="To">
-                        </div>
-                        <div class="col-md-3">
-                            <button class="btn btn-primary w-100" id="filter-btn">Filter</button>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-body">
-                            <table class="table table-striped table-hover" id="transactions-table">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Type</th>
-                                        <th>Amount</th>
-                                        <th>Recipient</th>
-                                        <th>Balance</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="analytics-view d-none" id="analytics-view">
-                    <h2 class="mb-4">Transaction Analytics</h2>
-                    
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Transaction Distribution</h5>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="distributionChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Monthly Transaction Amount</h5>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="amountChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Transaction Types Over Time</h5>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="typeOverTimeChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="container py-4">
+    <h2 class="mb-4">📊 MoMo Transactions Dashboard</h2>
     
-    <div class="modal fade" id="transactionModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Transaction Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="transaction-details">
-                    <!-- Details will be loaded here -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
+    <button id="process-btn" class="btn btn-success mb-4">
+      🚀 Process Data
+    </button>
+
+    <!-- Search and Filter Section -->
+    <div class="card mb-4">
+      <div class="card-header bg-light">
+        <h5 class="mb-0">🔍 Search and Filter Transactions</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-3">
+            <label for="search-text" class="form-label">Search Text</label>
+            <input type="text" id="search-text" class="form-control" placeholder="Search in all fields...">
+          </div>
+          <div class="col-md-3">
+            <label for="filter-type" class="form-label">Transaction Type</label>
+            <select id="filter-type" class="form-select">
+              <option value="">All Types</option>
+              <option value="incoming">Incoming Money</option>
+              <option value="payment">Payments to Code Holders</option>
+              <option value="transfer">Transfers to Mobile Numbers</option>
+              <option value="deposit">Bank Deposits</option>
+              <option value="airtime">Airtime Bill Payments</option>
+              <option value="cashpower">Cash Power Bill Payments</option>
+              <option value="Transactions Initiated by Third Parties">Transactions Initiated by Third Parties</option>
+              <option value="withdrawal">Withdrawals from Agents</option>
+              <option value="transfer">Bank Transfers</option>
+              <option value="airtime">Internet and Voice Bundle Purchases</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="filter-date-from" class="form-label">Date From</label>
+            <input type="date" id="filter-date-from" class="form-control">
+          </div>
+          <div class="col-md-3">
+            <label for="filter-date-to" class="form-label">Date To</label>
+            <input type="date" id="filter-date-to" class="form-control">
+          </div>
+          <div class="col-md-3">
+            <label for="filter-amount-min" class="form-label">Min Amount (RWF)</label>
+            <input type="number" id="filter-amount-min" class="form-control" placeholder="Minimum amount">
+          </div>
+          <div class="col-md-3">
+            <label for="filter-amount-max" class="form-label">Max Amount (RWF)</label>
+            <input type="number" id="filter-amount-max" class="form-control" placeholder="Maximum amount">
+          </div>
+          <div class="col-md-3 d-flex align-items-end">
+            <button id="apply-filters" class="btn btn-primary w-100">
+              Apply Filters
+            </button>
+          </div>
+          <div class="col-md-3 d-flex align-items-end">
+            <button id="reset-filters" class="btn btn-outline-secondary w-100">
+              Reset Filters
+            </button>
+          </div>
         </div>
+      </div>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="app.js"></script>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <div class="card text-bg-primary shadow">
+          <div class="card-body">
+            <h5 class="card-title">Total Amount</h5>
+            <p id="total-amount" class="card-text fs-4">0 RWF</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-bg-success shadow">
+          <div class="card-body">
+            <h5 class="card-title">Total Transactions</h5>
+            <p id="total-transactions" class="card-text fs-4">0</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-bg-info shadow">
+          <div class="card-body">
+            <h5 class="card-title">Unique Recipients</h5>
+            <p id="unique-recipients" class="card-text fs-4">0</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row mb-5">
+      <div class="col-md-6">
+        <h5 class="mb-3">Transaction Volume by Type</h5>
+        <canvas id="typeChart"></canvas>
+      </div>
+      <div class="col-md-6">
+        <h5 class="mb-3">Monthly Transaction Summary</h5>
+        <canvas id="monthlyChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Transaction Table -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped" id="transactions-table">
+        <thead class="table-dark">
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Amount (RWF)</th>
+            <th>Recipient</th>
+            <th>Balance (RWF)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Filled by JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Transaction Modal -->
+  <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Transaction Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="transaction-details">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
