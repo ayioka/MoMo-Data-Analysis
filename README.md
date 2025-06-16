@@ -6,8 +6,8 @@ Welcome to our MTN MoMo Transaction Analytics Dashboard! This full-stack applica
 
 **Developed by:**  
 👨‍💻 SHEM AYIOKA  
-👩‍💻 MPETA ATETE  
-👨‍💻 SAMUEL DUSHIMIMANA  
+👩‍💻 ATETE MPETA SHINA
+👨‍💻 SAMUEL DUSHIMIMANA
 
 ## 🎯 Project Purpose
 
@@ -24,12 +24,14 @@ We created this tool to help MTN Rwanda and its customers gain valuable insights
 ## 🛠️ Technologies Used
 
 **Backend:**
+
 - Python 3
 - Nestjs Framework
 - SQLite (Database)
 - lxml (XML Processing)
 
 **Frontend:**
+
 - HTML, CSS, JavaScript
 - Chart.js (Visualizations)
 - Font Awesome (Icons)
@@ -38,19 +40,21 @@ We created this tool to help MTN Rwanda and its customers gain valuable insights
 
 ### Prerequisites
 
-- Python 
+- Python
 - Modern web browser (Chrome, Firefox, Edge)
 - (Optional) Virtual environment (recommended)
 
 ### Installation Steps
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/ayioka/momo-data-analysis.git
    cd momo-data-analysis
    ```
 
 2. **Set up virtual environment (recommended)**
+
    ```bash
    python -m venv venv
    # Windows:
@@ -60,6 +64,7 @@ We created this tool to help MTN Rwanda and its customers gain valuable insights
    ```
 
 3. **Install dependencies**
+
    ```bash
    pip install -r backend/requirements.txt
    ```
@@ -71,6 +76,7 @@ We created this tool to help MTN Rwanda and its customers gain valuable insights
 ### Running the Application
 
 1. **Start the backend server**
+
    ```bash
    python run.py --run
    ```
@@ -88,26 +94,27 @@ We created this tool to help MTN Rwanda and its customers gain valuable insights
 
 ```
 momo-data-analysis/
-├── backend/            
-│   ├── app.py          
-│   ├── data_processor.py 
-│   ├── database.py     
-│   └── config.json     
-├── frontend/           
-│   ├── index.html      
-│   ├── dashboard.js   
-│   └── styles.css      
-├── data/               
-│   └── sms_v2.xml      
-├── database/           
-│   └── momo.db         
-├── run.py              
-└── README.md           
+├── backend/
+│   ├── app.py
+│   ├── data_processor.py
+│   ├── database.py
+│   └── config.json
+├── frontend/
+│   ├── index.html
+│   ├── dashboard.js
+│   └── styles.css
+├── data/
+│   └── sms_v2.xml
+├── database/
+│   └── momo.db
+├── run.py
+└── README.md
 ```
 
 ## 🔍 How It Works
 
 1. **Data Processing**:
+
    - Reads SMS data from XML file
    - Categorizes transactions using regex patterns
    - Extracts amounts, dates, and transaction details
@@ -119,24 +126,20 @@ momo-data-analysis/
    - Search and filter functionality
    - Summary statistics
 
-
 ## 🤝 Contributing
 
 We welcome contributions! Please fork the repository and submit pull requests.
 
+## Video walkthrough
 
-## Video walkthrough##
 Find the Youtube link for the walkthrough of the project and also find the report named report.pdf
-
 
 https://youtu.be/pZ1Khsin58o?si=vylJPHPGiRgCHxue
 
 ## 🙏 Acknowledgments
 
-
 - Our instructor MR. WAKUMA for guidance
 - Open source community for amazing tools
 - Nestjs for the backend framework
 
-  
 Shem, Mpeta & Samuel!!!!
