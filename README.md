@@ -127,7 +127,7 @@ We welcome contributions! Please fork the repository and submit pull requests.
 
 ## Video walkthrough##
 Find the Youtube link for the walkthrough of the project and also find the report named report.pdf
-
+https://youtu.be/pZ1Khsin58o?si=vylJPHPGiRgCHxue
 
 ## 🙏 Acknowledgments
 
