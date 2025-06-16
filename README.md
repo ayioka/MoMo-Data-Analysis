@@ -25,12 +25,12 @@ We created this tool to help MTN Rwanda and its customers gain valuable insights
 
 **Backend:**
 - Python 3
-- Flask (Web Framework)
+- Nestjs Framework
 - SQLite (Database)
 - lxml (XML Processing)
 
 **Frontend:**
-- HTML5, CSS3, JavaScript
+- HTML, CSS, JavaScript
 - Chart.js (Visualizations)
 - Font Awesome (Icons)
 
@@ -38,7 +38,7 @@ We created this tool to help MTN Rwanda and its customers gain valuable insights
 
 ### Prerequisites
 
-- Python 3.9+
+- Python 
 - Modern web browser (Chrome, Firefox, Edge)
 - (Optional) Virtual environment (recommended)
 
@@ -46,7 +46,7 @@ We created this tool to help MTN Rwanda and its customers gain valuable insights
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/momo-data-analysis.git
+   git clone https://github.com/ayioka/momo-data-analysis.git
    cd momo-data-analysis
    ```
 
@@ -124,12 +124,9 @@ momo-data-analysis/
 
 We welcome contributions! Please fork the repository and submit pull requests.
 
-## 📜 License
-
-This project is licensed under the MIT License.
 
 ## Video walkthrough##
-Find the youtube link for the walkthrough of the project and also find the report named report.pdf
+Find the Youtube link for the walkthrough of the project and also find the report named report.pdf
 
 
 ## 🙏 Acknowledgments
@@ -137,5 +134,7 @@ Find the youtube link for the walkthrough of the project and also find the repor
 
 - Our instructor MR. WAKUMA for guidance
 - Open source community for amazing tools
-- 
-Shem, Mpeta & Samuel
+- Nestjs for the backend framework
+
+  
+Shem, Mpeta & Samuel!!!!
